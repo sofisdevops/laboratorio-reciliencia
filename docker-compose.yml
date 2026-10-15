@@ -6,5 +6,5 @@ services:
     deploy:
       resources:
         limits:
-          cpus: "0.20"
-          memory: 128M
+          cpus: '0.25'      # Solo le permitimos usar el 25% de 1 solo núcleo de la CPU
+          memory: 128M      # Máximo 128 MB de memoria RAM
