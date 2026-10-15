@@ -9,10 +9,6 @@
 
 ## CAPTURA DE PANTALLA
 
-<<<<<<< Updated upstream
-## ANALISIS TECNICO
-### ¿Por qué un servidor multiproceso con balanceador de carga logra responder más tráfico usando las mismas restricciones de hardware que un servidor uniproceso?
-=======
 ![alt text](image.png)
 
 ## ANALISIS TECNICO
@@ -20,4 +16,5 @@
 En nuestras pruebas de laboratorio nos dimos cuenta de que el servidor uniproceso de Flask (app.run) de la Fase 1 colapsa por completo con un 100% de fallos al recibir 50 usuarios concurrentes bajo el apretado límite de 0.20 Cores. En cambio, cuando implementamos una arquitectura multiproceso con **Gunicorn** o un sistema con **Nginx** y réplicas (como en la Fase 3), logramos manejar mucha más concurrencia —llegando a soportar hasta 150 usuarios— porque las peticiones ya no se quedan atrapadas en una sola fila esperando a que un único hilo procese todo secuencialmente.   
 
 Esto sucede técnicamente porque el balanceador de carga y los múltiples workers reparten las solicitudes de manera distribuida entre varios procesos independientes. Así, a pesar de tener exactamente las mismas restricciones físicas de hardware, la CPU se aprovecha mejor y se evita el bloqueo total: si una petición se demora o satura un proceso, los demás siguen respondiendo tráfico, logrando una resiliencia muy superior y evitando el desastre del 100% de errores que tuvimos en el servidor de desarrollo. 
->>>>>>> Stashed changes
+
+========
