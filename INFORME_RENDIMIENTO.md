@@ -10,3 +10,4 @@
 ## CAPTURA DE PANTALLA
 
 ## ANALISIS TECNICO
+###¿Por qué un servidor multiproceso con balanceador de carga logra responder más tráfico usando las mismas restricciones de hardware que un servidor uniproceso?
