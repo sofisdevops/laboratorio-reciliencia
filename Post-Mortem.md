@@ -3,6 +3,15 @@ ______
 
 # Post-Mortem
 
+## Captura de pantalla de Dozzle filtrando el evento de error de Gunicorn (WORKER TIMEOUT)
+
+![alt text](image.png)
+## Captura de pantalla del gráfico de latencia de Locust mostrando el momento del fallo.
+
+![alt text](image-4.png)
+
+![alt text](image-1.png)
+
 ## Identificación de la Síntoma
 
 ### ¿Qué código de estado HTTP devuelve Nginx (nginx-balanceador)?

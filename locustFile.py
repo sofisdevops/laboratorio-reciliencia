@@ -12,6 +12,6 @@ class Comprador(HttpUser):
 
     @task(3)
     def comprar(self):
-        self.client.post("/comprador")
+        self.client.post("/comprar")
 
 
