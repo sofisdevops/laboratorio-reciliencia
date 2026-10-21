@@ -1,20 +1,46 @@
 
-## TABLA COMPARATIVA DE RESULTADOS
+______
 
-| **Fase** | **Servidor** / **Arquitectura** | **Límite CPU** | **Usuarios Concurrentes** | **RPS Logrados** | **Latencia P95** (ms) | % **Failures** |
-| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| **Fase 1** | Flask Dev (app.run) | 0.20 Cores | 50 | 32.9 | 10 | 100% |
-| **Fase 2** | Gunicorn (4 workers) | 0.20 Cores | 50 | 3.3 | 19000 | 0% |
-| **Fase 3** | Nginx + 3 Réplicas | 0.20 c/u | 150 | 6.1 | 82000 | 4% |
+# Post-Mortem
 
-## CAPTURA DE PANTALLA
+## Identificación de la Síntoma
 
-![alt text](image.png)
+### ¿Qué código de estado HTTP devuelve Nginx (nginx-balanceador)?
 
-## ANALISIS TECNICO
+#### 
 
-En nuestras pruebas de laboratorio nos dimos cuenta de que el servidor uniproceso de Flask (app.run) de la Fase 1 colapsa por completo con un 100% de fallos al recibir 50 usuarios concurrentes bajo el apretado límite de 0.20 Cores. En cambio, cuando implementamos una arquitectura multiproceso con **Gunicorn** o un sistema con **Nginx** y réplicas (como en la Fase 3), logramos manejar mucha más concurrencia —llegando a soportar hasta 150 usuarios— porque las peticiones ya no se quedan atrapadas en una sola fila esperando a que un único hilo procese todo secuencialmente.   
+### ¿qué mensaje de error exacto aparece en los logs del Backend (api-backend) cuando las peticiones empiezan a fallar?
 
-Esto sucede técnicamente porque el balanceador de carga y los múltiples workers reparten las solicitudes de manera distribuida entre varios procesos independientes. Así, a pesar de tener exactamente las mismas restricciones físicas de hardware, la CPU se aprovecha mejor y se evita el bloqueo total: si una petición se demora o satura un proceso, los demás siguen respondiendo tráfico, logrando una resiliencia muy superior y evitando el desastre del 100% de errores que tuvimos en el servidor de desarrollo. 
+####
 
-========
+## Diagnóstico de la Causa Raíz (Análisis SRE) Si el código Python no tiene ninguna sintaxis errónea ni lanza excepciones no capturadas (Tracebacks)
+
+### ¿Por qué Gunicorn está matando los procesos trabajadores (Worker Timeout)?
+
+####
+
+### ¿Qué relación existe entre la duración de la simulación (time.sleep(4)) y el parámetro -t 3 de Gunicorn?
+
+####
+
+## Efecto Domino en la Arquitectura
+
+### ¿Qué sucede con los 15 usuarios de Locust cuando las 2 réplicas de la API (cada una con solo 2 workers) se quedan sin hilos libres para atender peticiones entrantes?
+
+####
+
+### ¿Cómo interpreta Nginx la falta de respuesta de los contenedores tras bambalinas?
+
+####
+
+## Propuesta de Solución
+
+### Primer cambio concreto en la configuración
+
+####
+
+### Segundo cambio concreto en la configuración
+
+####
+
+______
