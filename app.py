@@ -1,16 +1,20 @@
 from flask import Flask
 import time
+import requests
 
 app = Flask(__name__)
-@app.route('/navegador', methods=['GET'])
-def navegador():
-    return "Pagina de navegador", 200
 
-@app.route('/comprador', methods=['POST'])
-def comprador():
-    time.sleep(2)
+@app.route("/comprar", methods=["POST"])
+def procesar_compra():
+
+    try:
+
+        time.sleep(4)
+
+        return {"status": "Aprobado", "transaccion_id": 9942}, 200
     
-    return "Pagina del comprador", 200
+    except Exception as e:
 
-if __name__ == '__main__':
-    app.run(port=8089, debug=True)
+        app.logger.error(f"Fallo en pasarela de pagos: {str(e)}")
+
+        return {"error": "Servicio no disponible"}, 500
