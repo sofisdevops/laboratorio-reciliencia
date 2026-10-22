@@ -14,4 +14,8 @@ class Comprador(HttpUser):
     def comprar(self):
         self.client.post("/comprador")
 
+class Cliente( HttpUser):
 
+    @task(1)
+    def revisar_version (self):
+        self.client.get("/version")
