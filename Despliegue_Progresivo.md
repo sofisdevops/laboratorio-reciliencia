@@ -29,5 +29,18 @@ ______
 
 ### Reconfiguren interval, timeout y retries en el docker-compose.yml de forma coherente con el tiempo de respuesta real de la aplicación.
 
+#### vamos a aumentar el timeout para que le de mas tiempo de respuesta a las replicas.
+
+## Evidencia visual
+
+![alt text](image-1.png)
+
+## 0 errores 502
+
+![alt text](image-2.png)
+
+## Justificacion tecnica
+
+#### sucede porque ahora estamos manejando las peticiones lentas especificamente con gevents y esto permite que no se colapsen las peticiones y alcance a dar atencion a las peticiones /health sin errores, adicional le estamos configurando mas tiempo de respuestaa las replicas
 ______
 

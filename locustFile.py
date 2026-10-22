@@ -1,21 +1,31 @@
 from locust import HttpUser, task, between
 
-class Navegador(HttpUser):
+class DescuentoUser(HttpUser):
     wait_time = between(1, 2)
 
-    @task(4)
-    def index(self):
-        self.client.get("/navegador")
+    @task
+    def probar_aplicar_descuento(self):
+        
+        self.client.post("/aplicar-descuento")
 
-class Comprador(HttpUser):
-    wait_time = between(1, 2)
+# from locust import HttpUser, task, between
 
-    @task(3)
-    def comprar(self):
-        self.client.post("/comprar")
+# class Navegador(HttpUser):
+#     wait_time = between(1, 2)
 
-class Cliente( HttpUser):
+#     @task(4)
+#     def index(self):
+#         self.client.get("/navegador")
 
-    @task(1)
-    def revisar_version (self):
-        self.client.get("/version")
+# class Comprador(HttpUser):
+#     wait_time = between(1, 2)
+
+#     @task(3)
+#     def comprar(self):
+#         self.client.post("/comprar")
+
+# class Cliente( HttpUser):
+
+#     @task(1)
+#     def revisar_version (self):
+#         self.client.get("/version")
